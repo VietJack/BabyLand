@@ -1,0 +1,84 @@
+{% extends 'shop/base.html' %}
+{% load humanize %}
+{% load static %}
+{% block head %}
+    <title>Baby land | {{product.name}}</title>
+{% endblock %}
+
+{% block content %}
+
+
+<!-- Product Details Section Begin -->
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__item">
+                        <img class="product__details__pic__item--large"
+                            src="/static/{{product.img_path}}" alt="">
+                    </div>
+                    <div class="product__details__pic__slider owl-carousel">
+                        <!-- <img data-imgbigurl="img/product/details/product-details-2.jpg"
+                            src="img/product/details/thumb-1.jpg" alt=""> -->
+                        <!-- Orther images of this product -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>{{product.name}}</h3>
+                    <div class="product__details__price">{{product.price|intcomma}} VND</div>
+                    <p>{{product.description}}</p>
+                    <div class="product__details__quantity">
+                        <form class="quantity" action="{% url 'shop:add-item' product.id %}" id="quantform" method="post">
+                            {% csrf_token %}
+                            <div class="pro-qty">
+                                <input type="text" value="1" name="quantity" >
+                            </div>
+                        </form>
+                    </div>
+                    <button class="primary-btn" form="quantform" type="submit">ADD TO CARD</button>
+                    <ul>
+                        <li><b>Category</b> <span>{{product.category}}</span></li>
+                        <li><b>Availability</b> <span>In Stock</span></li>
+                        <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Details Section End -->
+
+<!-- Related Product Section Begin -->
+<section class="related-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title related__product__title">
+                    <h2>Related Product</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for related_product in related_products %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="/static/{{related_product.img_path}}">
+                        <ul class="product__item__pic__hover">
+                            <li><a href="{% url 'shop:add-item' related_product.id %}"><i class="fa fa-shopping-cart"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6><a href="{% url 'shop:detail' related_product.id %}">{{related_product.name}}</a></h6>
+                        <h5>{{related_product.price|intcomma}} VND</h5>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- Related Product Section End -->
+{% endblock %}

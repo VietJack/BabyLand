@@ -1,0 +1,36 @@
+{% extends 'shop/base.html' %}
+{% load humanize %}
+{% load static %}
+{% block head %}
+    <title>Baby land | Ordered</title>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="breadcrumb-section set-bg" data-setbg="{% static 'shop/img/productbaner.png' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <div class="breadcrumb__option">
+                        <h2>Order Successfully</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <div class="checkout__order">
+        <h4>Your Order</h4>
+        <div class="checkout__order__products">Products <span>Total</span></div>
+        <ul>
+            {% for item in order.cartitem_set.all %}
+            <li>{{item.product.name}} <span>{{item.total|intcomma}} VND</span></li>
+            {% endfor %}
+        </ul>
+        <div class="checkout__order__subtotal">Shipping <span>20.000 VND</span></div>
+        <div class="checkout__order__total">Total <span>{{total_money|add:'20000'|intcomma}} VND</span></div>
+    </div>
+</section>
+{% endblock %}

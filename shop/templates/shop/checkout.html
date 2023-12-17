@@ -1,0 +1,70 @@
+{% extends 'shop/base.html' %}
+{% load humanize %}
+{% load static %}
+{% block head %}
+    <title>Baby land | Checkout</title>
+{% endblock %}
+
+{% block content %}
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            {% if request.method == 'POST'%}
+            <h4>Incorrect Password! Please try again</h4>
+            {% endif %}
+            <h4>Billing Details</h4>
+            <form method="post" id="od">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-6 col-md-6" method="post" id="info">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Name<span>*</span></p>
+                                    <input type="text" name="name">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Phone<span>*</span></p>
+                                    <input type="text" name="phone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Address<span>*</span></p>
+                            <input type="text" placeholder="Street Address" class="checkout__input__add" name="address">
+                        </div>
+                        <div class="checkout__input">
+                            <p>Account Password<span>*</span></p>
+                            <input type="password" name="password">
+                        </div>
+                        <div class="checkout__input">
+                            <p>Order notes<span>*</span></p>
+                            <input type="text"
+                                placeholder="Notes about your order, e.g. special notes for delivery." name="note">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="checkout__order">
+                            <h4>Your Order</h4>
+                            <div class="checkout__order__products">Products <span>Total</span></div>
+                            <ul>
+                                {% for item in cart.cartitem_set.all %}
+                                <li>{{item.product.name}} <span>{{item.total|intcomma}}</span></li>
+                                {% endfor %}
+                            </ul>
+                            <div class="checkout__order__subtotal">Shipping <span>20.000 VND</span></div>
+                            <div class="checkout__order__total">Total <span>{{total|add:'20000'|intcomma}} VND</span></div>
+                            <button type="submit" class="site-btn" form="od">PLACE ORDER</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- Checkout Section End -->
+
+{% endblock %}

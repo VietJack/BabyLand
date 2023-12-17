@@ -1,0 +1,92 @@
+{% extends 'shop/base.html' %}
+{% load humanize %}
+{% load static %}
+{% block head %}
+    <title>Baby land | Home</title>
+{% endblock %}
+
+{% block hero %}
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>All Category</span>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'shop:products'%}?category=milk">Milk</a></li>
+                        <li><a href="{% url 'shop:products'%}?category=diaper">Diaper</a></li>
+                        <li><a href="{% url 'shop:products'%}?category=food & weaning food">Food & Weaning food</a></li>
+                        <li><a href="{% url 'shop:products'%}?category=bath & body care">Bath & Body care</a></li>
+                        <li><a href="{% url 'shop:products'%}?category=baby accessory">Baby accessory</a></li>
+                        <li><a href="{% url 'shop:products'%}?category=toy">Toy</a></li>
+                        <li><a href="{% url 'shop:products'%}?category=bedroom">Bedroom</a></li>
+                        <li><a href="{% url 'shop:products'%}?category=clothes">Clothes</a></li>
+                        <li><a href="{% url 'shop:products'%}?category=towel">Towel</a></li>
+                        <li><a href="{% url 'shop:products'%}?category=orther">Orther</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="#">
+                            <input type="text" placeholder="What do yo u need?">
+                            <button type="submit" class="site-btn">SEARCH</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>0347 381 776</h5>
+                            <span>support 24/7 time</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__item set-bg" data-setbg="{% static 'shop/img/headerbaner.png' %}"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+{% endblock %}
+
+
+{% block content %}
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Featured Product</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter">
+            {% for product in products %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="/static/{{product.img_path}}">
+                        <ul class="featured__item__pic__hover">
+                            <li><a href="{% url 'shop:add-item' product.id %}"><i class="fa fa-shopping-cart"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="featured__item__text">
+                        <h6><a href="{% url 'shop:detail' product.id %}">{{product.name}}</a></h6>
+                        <h5>{{product.price|intcomma}} VND</h5>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- Featured Section End -->
+
+{% endblock %}
